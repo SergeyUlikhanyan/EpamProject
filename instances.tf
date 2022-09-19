@@ -32,7 +32,7 @@ resource "aws_instance" "mongo_db" {
 }
 
   #Create instance for MySQL
-resource "aws_instance" "mongo_db" {
+resource "aws_instance" "MySQL" {
   ami                    = "ami-0c9354388bb36c088"
   instance_type          = "t2.micro"
   key_name               = var.mykey
