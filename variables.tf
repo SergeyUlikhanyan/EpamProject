@@ -2,5 +2,5 @@
 
 variable "mykey" {
   type    = string
-  default = "EpamKey"
+  default = "Frankfurt"
 }
