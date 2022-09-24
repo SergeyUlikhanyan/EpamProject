@@ -10,86 +10,37 @@ resource "aws_instance" "Consul" {
   }
 }
 
-#Create RabbitMQ instance
-resource "aws_instance" "RabbitMQ" {
+
+locals {
+  ssh_user = "ubuntu"
+  key_name = "Frankfurt"
+  private_key_path = "/home/sergey/Downloads/Frankfurt.pem"
+}
+
+
+
+#Create Consul instance
+resource "aws_instance" "Consul" {
   ami           = "ami-0c9354388bb36c088"
   instance_type = "t2.micro"
-  key_name      = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
+  key_name      = local.key_name
+  associate_public_ip_address = true
+
+  provisioner "remote-exec" {
+    inline = ["echo 'Waiting ssh'"]
+
+    connection {
+      type = "ssh"
+      user = local.ssh_user
+      private_key = file(local.private_key_path)
+      host = aws_instance.Consul.public_ip
+    }
+  }
   tags = {
-    Name  = "RabbitMQ"
+    Name  = "Consul"
     Group = "Server"
   }
-}
-
-#Create instance for Mongo_DB
-resource "aws_instance" "mongo_db" {
-  ami                    = "ami-0c9354388bb36c088"
-  instance_type          = "t2.micro"
-  key_name               = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
-  tags = {
-    Name  = "Mongo_db"
-    Group = "Database"
-  }
-}
-
-  #Create instance for MySQL
-resource "aws_instance" "MySQL" {
-  ami                    = "ami-0c9354388bb36c088"
-  instance_type          = "t2.micro"
-  key_name               = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
-  tags = {
-    Name  = "MySQL"
-    Group = "Database"
-  }
-}
-
-#Create ServiceOne instance
-resource "aws_instance" "ServiceOne" {
-  ami                    = "ami-0c9354388bb36c088"
-  instance_type          = "t2.micro"
-  key_name               = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
-  tags = {
-    Name  = "ServiceOne"
-    Group = "Services"
-  }
-}
-
-#Create ServiceTwo instance
-resource "aws_instance" "ServiceTwo" {
-  ami           = "ami-0c9354388bb36c088"
-  instance_type = "t2.micro"
-  key_name      = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
-  tags = {
-    Name  = "ServiceTwo"
-    Group = "Services"
-  }
-}
-
-#Create ApiGateway instance
-resource "aws_instance" "ApiGateway" {
-  ami                    = "ami-0c9354388bb36c088"
-  instance_type          = "t2.micro"
-  key_name               = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
-  tags = {
-    Name  = "ApiGateway"
-    Group = "Frontend"
-  }
-}
-
-#Create Web applications instance
-resource "aws_instance" "WebApp" {
-  ami                    = "ami-0c9354388bb36c088"
-  instance_type          = "t2.micro"
-  key_name               = var.mykey
-  user_data = templatefile("templates/install_docker.tpl", {})
-  tags = {
-    Name  = "WebApp"
-    Group = "Frontend"
+   provisioner "local-exec" {
+    command = "ansible-playbook -i ${aws_instance.Consul.public_ip}, --private-key ${local.private_key_path} ansible/consul.yaml"
   }
 }
