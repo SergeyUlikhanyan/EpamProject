@@ -39,5 +39,6 @@ sudo gpasswd -a ubuntu docker
 newgrp docker
 sudo service docker enable
 
+
 cd microservices/build/docker/scripts
 ./deploy.sh docker

@@ -24,3 +24,8 @@ variable "subnet_2_cidr" {
   description = "CIDR for the Subnet 2"
   default     = "10.0.2.0/24"
 }
+
+variable "health_check_path" {
+  type    = string
+  default = "/"
+}
