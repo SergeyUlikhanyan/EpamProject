@@ -38,7 +38,7 @@ resource "aws_launch_template" "my_launch_template" {
   instance_type          = "t2.large"
   vpc_security_group_ids = [aws_security_group.Project_SecGroup.id]
   key_name               = "Frankfurt"
-  user_data              = filebase64("templates/script-app1.sh")
+  user_data              = filebase64("../templates/script-app1.sh")
   ebs_optimized          = false
   update_default_version = true
   block_device_mappings {
