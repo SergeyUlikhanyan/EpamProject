@@ -1,3 +1,4 @@
+# Create Epam Project VPC
 resource "aws_vpc" "Project" {
   cidr_block       = "10.0.0.0/20"
   instance_tenancy = "default"
@@ -10,9 +11,10 @@ resource "aws_internet_gateway" "ProjectIGW" {
   vpc_id = aws_vpc.Project.id
 }
 
+# VPC Public Subnet 1
 resource "aws_subnet" "Project_Public1" {
   vpc_id                  = aws_vpc.Project.id
-  cidr_block              = "10.0.0.0/26"
+  cidr_block              = var.cidr1
   map_public_ip_on_launch = true
   availability_zone       = var.first_zone
   tags   = {
@@ -20,9 +22,10 @@ resource "aws_subnet" "Project_Public1" {
   }
 }
 
+# VPC Public Subnet 2
 resource "aws_subnet" "Project_Public2" {
   vpc_id                  = aws_vpc.Project.id
-  cidr_block              = "10.0.1.0/26"
+  cidr_block              = var.cidr2
   map_public_ip_on_launch = true
   availability_zone       = var.second_zone
   tags   = {
@@ -30,6 +33,7 @@ resource "aws_subnet" "Project_Public2" {
   }
 }
 
+# Route Table for VPC
 resource "aws_route_table" "Project_VPC_RT" {
   vpc_id       = aws_vpc.Project.id
   route {

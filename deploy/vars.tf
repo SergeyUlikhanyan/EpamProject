@@ -1,3 +1,4 @@
+# Variables
 variable "region" {
   type    = string
   default = "eu-central-1"
@@ -11,4 +12,24 @@ variable "first_zone" {
 variable "second_zone" {
   type    = string
   default = "eu-central-1b"
+}
+
+variable "image_id" {
+  type    = string
+  default = "ami-0c9354388bb36c088"
+}
+
+variable "instance_type" {
+  type    = string
+  default = "t2.large"
+}
+
+variable "cidr1" {
+  type    = string
+  default = "10.0.0.0/26"
+}
+
+variable "cidr2" {
+  type    = string
+  default = "10.0.1.0/26"
 }
