@@ -1,4 +1,9 @@
 # Variables
+variable "mykey" {
+  type    = string
+  default = "Frankfurt"
+}
+
 variable "region" {
   type    = string
   default = "eu-central-1"

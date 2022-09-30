@@ -37,7 +37,7 @@ resource "aws_launch_template" "my_launch_template" {
   image_id               = var.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.Project_SecGroup.id]
-  key_name               = "Frankfurt"
+  key_name               = var.mykey
   user_data              = filebase64("../templates/full-microservices.sh")
   ebs_optimized          = false
   update_default_version = true
