@@ -1,6 +1,6 @@
 # Route53 setup
 data "aws_route53_zone" "selected" {
-  name         = "sergeyulikhanyan.link."
+  name         = var.domain_name
   private_zone = false
 }
 

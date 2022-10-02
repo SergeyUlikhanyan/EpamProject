@@ -29,6 +29,11 @@ variable "instance_type" {
   default = "t2.large"
 }
 
+variable "cidrVPC" {
+  type    = string
+  default = "10.0.0.0/20"
+}
+
 variable "cidr1" {
   type    = string
   default = "10.0.0.0/26"
@@ -37,4 +42,14 @@ variable "cidr1" {
 variable "cidr2" {
   type    = string
   default = "10.0.1.0/26"
+}
+
+variable "cidrRT" {
+  type    = string
+  default = "0.0.0.0/0"
+}
+
+variable "domain_name" {
+  type    = string
+  default = "sergeyulikhanyan.link."
 }

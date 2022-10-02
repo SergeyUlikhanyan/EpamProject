@@ -1,6 +1,6 @@
 # Create Epam Project VPC
 resource "aws_vpc" "Project" {
-  cidr_block       = "10.0.0.0/20"
+  cidr_block       = var.cidrVPC
   instance_tenancy = "default"
   tags   = {
     Name = "Project VPC"
@@ -37,7 +37,7 @@ resource "aws_subnet" "Project_Public2" {
 resource "aws_route_table" "Project_VPC_RT" {
   vpc_id       = aws_vpc.Project.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.cidrRT
     gateway_id = aws_internet_gateway.ProjectIGW.id
   }
   tags   = {

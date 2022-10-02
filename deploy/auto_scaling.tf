@@ -1,9 +1,9 @@
 # Autoscaling Group Resource
 resource "aws_autoscaling_group" "asg" {
   name_prefix               = "myasg-"
-  desired_capacity          = 1
+  desired_capacity          = 2
   max_size                  = 4
-  min_size                  = 1
+  min_size                  = 2
   vpc_zone_identifier       = [aws_subnet.Project_Public1.id, aws_subnet.Project_Public2.id]
   health_check_type         = "EC2"
   health_check_grace_period = 300
